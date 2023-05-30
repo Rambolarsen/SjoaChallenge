@@ -28,7 +28,7 @@ jobs:
         username: ${{ secrets.SjoaChallenge_USERNAME_9671 }}
         password: ${{ secrets.SjoaChallenge_PASSWORD_9671 }}
     - name: Build and push container image to registry
-      run: dotnet publish -c Release -r linux-x64 -p:PublishProfile=DefaultContainer -p:ContainerImageTag=${{ github.sha }} --no-self-contained -p:ContainerRegistry=${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }} -bl
+      run: dotnet publish -c Release -r linux-x64 -p:PublishProfile=DefaultContainer -p:ContainerImageTag=${{ github.sha }} --self-contained -p:ContainerRegistry=${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }} -bl
     - name: Upload binlog for investigation
       uses: actions/upload-artifact@v3
       with:
