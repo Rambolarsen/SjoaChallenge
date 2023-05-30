@@ -1,0 +1,43 @@
+﻿@page "/"
+@using Microsoft.Extensions.Logging
+@inject ILogger<Index> Logger
+<PageTitle>Index</PageTitle>
+
+<div>
+    <Flicker />
+    <!-- Lurer på hva som skjer om du skriver inn navnet på ett hvis selskap her? -->
+    <div class="input-wrapper">
+        <input type="text" @oninput="HandleSubmit" />
+    </div>
+</div>
+
+@code {
+    public InitialSolution initialSolution = new();
+
+    private void HandleSubmit(ChangeEventArgs e)
+    {
+        // Process the form
+        if (string.Compare("bouvet", e.Value?.ToString(), true) == 0)
+        {
+            Logger.LogInformation("HandleSubmit called with value {0}", e.Value);
+        }
+    }
+
+    public class InitialSolution
+    {
+        public string? Answer { get; set; }
+    }
+}
+
+<style>
+    .input-wrapper{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    input {
+        height: 25px;
+        font-size: 25px;
+        margin-top: -5rem;
+    }
+</style>

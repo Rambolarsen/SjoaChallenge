@@ -1,0 +1,97 @@
+﻿.flicker-tear-blazor {
+    animation: flicker 2s infinite, tear 0.8s infinite;
+    opacity: 1;
+    color: darkgray;
+}
+
+@keyframes flicker {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+    51% {
+        opacity: 0.4;
+    }
+
+    52% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes tear {
+    0% {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    50% {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    51% {
+        clip-path: polygon(0 0, 100% 0, 100% 50%, 0% 50%);
+    }
+
+    52% {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    100% {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    }
+}
+
+.main-menu {
+    /* The image used */
+    background-color: black;
+    background-image: url('resources/ridderspranget.jpg');
+    /* Full height */
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: aliceblue !important;    
+    padding: 15px;
+    text-align: center;
+    margin: 95px auto;
+    opacity: 0.5;
+    height: 100px;
+}
+
+p {
+    margin: -12rem 2rem 11rem 2rem;
+    text-align: center;
+    text-shadow: 4px 4px 4px #aaa;
+    font-family: 'Tangerine', serif;
+    font-size: 72px;
+}
+
+@media (max-width: 500px) {
+    p {
+        font-size: 48px;
+        margin: -10rem 2rem 11rem 2rem;
+    }
+
+    .main-menu {
+        height: 60px;
+    }
+}
+
+@media (max-width: 300px) {
+    p {
+        font-size: 28px;
+        margin: -8rem 2rem 11rem 2rem;
+    }
+
+    .main-menu {
+        height: 30px;
+    }
+}
