@@ -1,1 +1,12 @@
-﻿
+﻿.input-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+input {
+    height: 25px;
+    font-size: 25px;
+    margin-top: -5rem;
+    max-width: 80%;
+}

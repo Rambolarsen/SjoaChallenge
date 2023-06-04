@@ -1,0 +1,30 @@
+﻿@using static SjoaChallenge.TerminalComponents.OutputLineComponent;
+@inject IJSRuntime JS
+
+<div id="output-container">
+    @foreach (var forecast in outputLines)
+    {
+        <OutputLineComponent Output="@forecast" />
+    }
+</div>
+
+@code {
+    private ICollection<OutputLine> outputLines { get; set; } = new List<OutputLine>(){ new OutputLine("<h3>Test</h3>", true) };
+
+    public async Task ProcessCommand(string input)
+    {
+        await JS.InvokeVoidAsync("scrollToBottom");
+
+        if (string.Compare(input, "clear", true) == 0)
+        {
+            outputLines.Clear();
+        }
+        else
+        {
+            var outputLine = new OutputLine(input);
+            outputLines.Add(outputLine);
+        }
+        
+        StateHasChanged();
+    }
+}

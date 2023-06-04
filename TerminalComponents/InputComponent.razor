@@ -1,0 +1,23 @@
+﻿@inject IJSRuntime JS
+
+<input id="input-container" placeholder=">>" @bind="commandInput" @ref="commandInputReference" autofocus />
+
+@code {
+    private ElementReference commandInputReference;
+    private string commandInput { get; set; } = string.Empty;
+
+    public string GetInput()
+    {
+        string input = commandInput;
+        commandInput = string.Empty;
+
+        StateHasChanged();
+        return input;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JS.InvokeVoidAsync("scrollToBottom");
+        await commandInputReference.FocusAsync();
+    }
+}

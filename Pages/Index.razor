@@ -1,25 +1,40 @@
 ﻿@page "/"
 @using Microsoft.Extensions.Logging
+@inject NavigationManager NavigationManager;
 @inject ILogger<Index> Logger
+@inject IConfiguration Configuration
+@inject IJSRuntime JS
+
+@inject Blazored.SessionStorage.ISessionStorageService SessionStorage
+
 <PageTitle>Index</PageTitle>
 
 <div>
     <Flicker />
-    <!-- Lurer på hva som skjer om du skriver inn navnet på ett hvis selskap her? -->
     <div class="input-wrapper">
-        <input type="text" @oninput="HandleSubmit" />
+        <input type="text" @bind="Text" @oninput="HandleSubmit" />
     </div>
 </div>
 
 @code {
+    private string Text { get; set; } = string.Empty;
     public InitialSolution initialSolution = new();
 
-    private void HandleSubmit(ChangeEventArgs e)
+    private async Task HandleSubmit(ChangeEventArgs e)
     {
-        // Process the form
+        if (e.Value?.ToString()?.Length > 6)
+        {
+            Text = string.Empty;
+            StateHasChanged();
+            return;
+        } 
         if (string.Compare("bouvet", e.Value?.ToString(), true) == 0)
         {
             Logger.LogInformation("HandleSubmit called with value {0}", e.Value);
+            var remoteUserAgent = await JS.InvokeAsync<string>("getUserAgent");
+
+            await SessionStorage.SetItemAsStringAsync("LoggedIn", "true");
+            NavigationManager.NavigateTo("terminal");
         }
     }
 
@@ -28,16 +43,3 @@
         public string? Answer { get; set; }
     }
 }
-
-<style>
-    .input-wrapper{
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-    input {
-        height: 25px;
-        font-size: 25px;
-        margin-top: -5rem;
-    }
-</style>

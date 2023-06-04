@@ -5,6 +5,10 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SjoaChallenge", "SjoaChallenge.csproj", "{065A470C-7330-44F9-833F-0F1AE9E84529}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SjoaChallenge.Tests", "..\SjoaChallenge.Tests\SjoaChallenge.Tests.csproj", "{B7D9A8A8-22F9-41AD-8C45-64AEB9141D16}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Terminal", "..\Terminal\Terminal.csproj", "{16B886A3-B3D3-4D4C-B948-4A85DF834280}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{065A470C-7330-44F9-833F-0F1AE9E84529}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{065A470C-7330-44F9-833F-0F1AE9E84529}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{065A470C-7330-44F9-833F-0F1AE9E84529}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7D9A8A8-22F9-41AD-8C45-64AEB9141D16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7D9A8A8-22F9-41AD-8C45-64AEB9141D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7D9A8A8-22F9-41AD-8C45-64AEB9141D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7D9A8A8-22F9-41AD-8C45-64AEB9141D16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16B886A3-B3D3-4D4C-B948-4A85DF834280}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16B886A3-B3D3-4D4C-B948-4A85DF834280}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16B886A3-B3D3-4D4C-B948-4A85DF834280}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16B886A3-B3D3-4D4C-B948-4A85DF834280}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

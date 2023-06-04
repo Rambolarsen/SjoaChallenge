@@ -1,0 +1,25 @@
+﻿<p class="output-line">@((MarkupString)@Output.HTML)</p>
+
+@code {
+    [Parameter] public OutputLine Output { get; set; } = new OutputLine();
+
+    public class OutputLine
+    {
+        public OutputLine()
+        {
+            HTML = "<span>$: </span>";
+        }
+
+        public OutputLine(string html)
+        {
+            HTML = $"$: {html}";
+        }
+
+        public OutputLine(string html, bool isHeader)
+        {
+            HTML = html;
+        }
+
+        public string HTML { get; set; }  
+    }
+}

@@ -1,47 +1,65 @@
 ﻿@page "/terminal"
+@using SjoaChallenge.TerminalComponents
+@using SjoaChallenge.Utilities
 @inherits ComponentBase
-@inject IJSRuntime JS
+@inject NavigationManager NavigationManager
+@inject Blazored.SessionStorage.ISessionStorageService SessionStorage
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+@inject UsernameGenerator UsernameGenerator
 
 <div id="terminal">
-    <pre>Welcome to Fake Terminal!</pre>
-    <pre id="output" @ref="terminalOutput"></pre>
+    <OutputComponent @ref="outputComponent" />
     <form @onsubmit=HandleInput>
-        <input id="input-container" placeholder=">>" @bind="commandInput" @ref="commandInputReference" autofocus />
+        <InputComponent @ref="inputComponent" />
     </form>    
 </div>
 
 @code {
-    private ElementReference terminalOutput;
-    private ElementReference commandInputReference;
-    private string commandInput { get; set; } = string.Empty;
+    private OutputComponent? outputComponent = new OutputComponent();
+    private InputComponent? inputComponent = new InputComponent();
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)  
+    protected override async Task OnInitializedAsync()
     {
-        await JS.InvokeVoidAsync("scrollToBottom");
-        await commandInputReference.FocusAsync();
+        if(bool.TryParse((await SessionStorage.GetItemAsStringAsync("LoggedIn")), out var loggedIn))
+        {
+            if (loggedIn)
+            {
+                var username = (await SessionStorage.GetItemAsStringAsync("Username")) ?? string.Empty;
+                if (string.IsNullOrEmpty(username))
+                {
+                    var usernames = await LocalStorage.GetItemAsync<ICollection<string>>("Usernames");
+                    username = await GenerateUniqueUsername(usernames);
+
+                    if (usernames == null)
+                    {
+                        usernames = new List<string>();
+
+                    }
+                    usernames.Add(username);
+                    await LocalStorage.SetItemAsync<ICollection<string>>("Usernames", usernames);
+                }
+            }
+            return;
+        }
+
+        NavigationManager.NavigateTo("");
     }
 
+    private async Task<string> GenerateUniqueUsername(ICollection<string>? usernames)
+    {
+        var username = await UsernameGenerator.GenerateUsername();
+        if (usernames?.Contains(username) ?? false)
+            await GenerateUniqueUsername(usernames);
+        
+        return username;
+    }
 
     private async Task HandleInput()
     {
-        string input = commandInput;
-        commandInput = string.Empty;
+        if (inputComponent == null || outputComponent == null) return;
 
-        await ProcessCommand(input);
-    }
-
-    private async Task ProcessCommand(string input)
-    {
-        await JS.InvokeVoidAsync("scrollToBottom");
-
-        string output = $">> {input}";
-        await JS.InvokeVoidAsync("appendToTerminal", terminalOutput, output);
-
-        // You can add logic here to interpret and execute commands
-        if(input == "clear")
-        {
-            await JS.InvokeVoidAsync("clearTerminal");
-        }
+        var input = inputComponent.GetInput();
+        await outputComponent.ProcessCommand(input);
     }
 }
 

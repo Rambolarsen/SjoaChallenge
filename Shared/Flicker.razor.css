@@ -74,7 +74,7 @@ p {
     font-size: 72px;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
     p {
         font-size: 48px;
         margin: -10rem 2rem 11rem 2rem;
@@ -85,10 +85,23 @@ p {
     }
 }
 
+@media (max-width: 450px) {
+    p {
+        font-size: 32px;
+        margin: -9rem 2rem 11rem 2rem;
+        min-width: 230px;
+    }
+
+    .main-menu {
+        height: 50px;
+    }
+}
+
 @media (max-width: 300px) {
     p {
-        font-size: 28px;
+        font-size: 25px;
         margin: -8rem 2rem 11rem 2rem;
+        min-width: 230px;
     }
 
     .main-menu {

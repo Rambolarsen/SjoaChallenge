@@ -1,0 +1,11 @@
+﻿#input-container {
+    width: 100%;
+    background-color: black;
+    border: none;
+    color: aqua;
+    font-size: 12px;
+}
+
+textarea:focus, input:focus {
+    outline: none;
+}
