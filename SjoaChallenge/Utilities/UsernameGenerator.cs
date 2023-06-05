@@ -2,7 +2,12 @@
 
 namespace SjoaChallenge.Utilities
 {
-    public class UsernameGenerator
+    public interface IUsernameGenerator
+    {
+        Task<string> GenerateUsername();
+    }
+
+    public class UsernameGenerator : IUsernameGenerator
     {
         private ICollection<string>? _actions;
         private ICollection<string>? _animals;

@@ -1,57 +1,34 @@
 ﻿@page "/terminal"
 @using SjoaChallenge.TerminalComponents
 @using SjoaChallenge.Utilities
+@using SjoaChallenge.Services
 @inherits ComponentBase
 @inject NavigationManager NavigationManager
-@inject Blazored.SessionStorage.ISessionStorageService SessionStorage
-@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
-@inject UsernameGenerator UsernameGenerator
+@inject UserService UserService
+@inject LocationService LocationService
 
 <div id="terminal">
-    <OutputComponent @ref="outputComponent" />
+    <OutputComponent Username="@username" Location="@location" @ref="outputComponent" />
     <form @onsubmit=HandleInput>
-        <InputComponent @ref="inputComponent" />
+        <InputComponent Username="@username" Location="@location" @ref="inputComponent" />
     </form>    
 </div>
 
 @code {
     private OutputComponent? outputComponent = new OutputComponent();
     private InputComponent? inputComponent = new InputComponent();
-
+    private string username = string.Empty;
+    private string location = string.Empty;
     protected override async Task OnInitializedAsync()
     {
-        if(bool.TryParse((await SessionStorage.GetItemAsStringAsync("LoggedIn")), out var loggedIn))
+        if(await UserService.IsLoggedIn())
         {
-            if (loggedIn)
-            {
-                var username = (await SessionStorage.GetItemAsStringAsync("Username")) ?? string.Empty;
-                if (string.IsNullOrEmpty(username))
-                {
-                    var usernames = await LocalStorage.GetItemAsync<ICollection<string>>("Usernames");
-                    username = await GenerateUniqueUsername(usernames);
-
-                    if (usernames == null)
-                    {
-                        usernames = new List<string>();
-                    }
-                    usernames.Add(username);
-                    await LocalStorage.SetItemAsync<ICollection<string>>("Usernames", usernames);
-                    await SessionStorage.SetItemAsync<string>("Username", username);
-                }
-            }
+            username = await UserService.GetUsername();
+            location = await LocationService.GetLocation();
             return;
         }
 
         NavigationManager.NavigateTo("");
-    }
-
-    private async Task<string> GenerateUniqueUsername(ICollection<string>? usernames)
-    {
-        var username = await UsernameGenerator.GenerateUsername();
-        if (usernames?.Contains(username) ?? false)
-            await GenerateUniqueUsername(usernames);
-        
-        return username;
     }
 
     private async Task HandleInput()

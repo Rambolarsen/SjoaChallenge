@@ -1,7 +1,17 @@
 ﻿.output-line {
     margin-top: 0;
     margin-bottom: 0;
-    font-size: 0.8rem;
+    font-size: 12px;
     overflow: hidden;
     white-space: nowrap;
+}
+
+.username {
+    color: greenyellow;
+    font-weight:bold;
+}
+
+.location {
+    color: cornflowerblue;
+    font-weight: bold;
 }

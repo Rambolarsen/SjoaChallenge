@@ -1,15 +1,20 @@
 ﻿@using static SjoaChallenge.TerminalComponents.OutputLineComponent;
+@using SjoaChallenge.Services
 @inject IJSRuntime JS
+@inject UserService UserService
+@inject CommandService CommandService
 
 <div id="output-container">
-    @foreach (var forecast in outputLines)
+    @foreach (var outputLine in outputLines)
     {
-        <OutputLineComponent Output="@forecast" />
+        <OutputLineComponent Output="@outputLine" />
     }
 </div>
 
 @code {
-    private ICollection<OutputLine> outputLines { get; set; } = new List<OutputLine>(){ new OutputLine("<h3>Test</h3>", true) };
+    [Parameter] public string Username { get; set; } = string.Empty;
+    [Parameter] public string Location { get; set; } = string.Empty;
+    private ICollection<OutputLine> outputLines { get; set; } = new List<OutputLine>(){ new OutputLine("<h3>Test</h3>") };
 
     public async Task ProcessCommand(string input)
     {
@@ -21,8 +26,12 @@
         }
         else
         {
-            var outputLine = new OutputLine(input);
+            var outputLine = new OutputLine(input, Username, Location);
             outputLines.Add(outputLine);
+            var commandOutput = CommandService.HandleCommand(input);
+
+            var commandOutputLine = new OutputLine(commandOutput);
+            outputLines.Add(commandOutputLine);
         }
         
         StateHasChanged();

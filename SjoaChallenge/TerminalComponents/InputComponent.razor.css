@@ -1,9 +1,22 @@
 ﻿#input-container {
     width: 100%;
+    font-size: 12px;
+}
+
+#input-field {
     background-color: black;
     border: none;
     color: aqua;
-    font-size: 12px;
+}
+
+.username {
+    color: greenyellow;
+    font-weight: bold;
+}
+
+.location {
+    color: cornflowerblue;
+    font-weight: bold;
 }
 
 textarea:focus, input:focus {

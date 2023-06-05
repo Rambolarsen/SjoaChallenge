@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SjoaChallenge\SjoaChallenge.csproj" />
-    <ProjectReference Include="..\Terminal\Terminal.csproj" />
   </ItemGroup>
 
 </Project>

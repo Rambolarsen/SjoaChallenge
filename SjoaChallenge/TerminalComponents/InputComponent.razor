@@ -1,8 +1,23 @@
 ﻿@inject IJSRuntime JS
 
-<input id="input-container" placeholder=">>" @bind="commandInput" @ref="commandInputReference" autofocus />
+<div id="input-container">
+    <span class="username">@Username</span>
+    @if (!string.IsNullOrEmpty(Username))
+    {
+        <span>:</span>
+    }
+    <span class="location">@Location</span>
+    @if (!string.IsNullOrEmpty(Location))
+    {
+        <span>$ </span>
+    } 
+    <input id="input-field" @bind="commandInput" @ref="commandInputReference" autofocus />
+</div>
+
 
 @code {
+    [Parameter] public string Username { get; set; } = string.Empty;
+    [Parameter] public string Location { get; set; } = string.Empty;
     private ElementReference commandInputReference;
     private string commandInput { get; set; } = string.Empty;
 

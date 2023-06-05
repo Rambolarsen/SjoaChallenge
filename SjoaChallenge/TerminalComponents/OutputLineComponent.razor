@@ -1,4 +1,19 @@
-﻿<p class="output-line">@((MarkupString)@Output.HTML)</p>
+﻿@inject Blazored.SessionStorage.ISessionStorageService SessionStorage
+
+<div style="font-size:12px;">
+    <span class="username">@Output.User</span>    
+    @if (!string.IsNullOrEmpty(@Output.User))
+    {
+        <span>:</span>
+    }
+    <span class="location">@Output.Location</span>
+    @if (!string.IsNullOrEmpty(@Output.Location))
+    {
+        <span>$ </span>
+    }
+    <span class="output-line">@((MarkupString)@Output.HTML)</span>
+</div>
+ 
 
 @code {
     [Parameter] public OutputLine Output { get; set; } = new OutputLine();
@@ -8,18 +23,27 @@
         public OutputLine()
         {
             HTML = "<span>$: </span>";
+            User = "DummyUser";
+            Location = "DummyLocation";
+        }
+
+        public OutputLine(string html, string user, string location) : this(html)
+        {
+            User = user;
+            Location = location;
         }
 
         public OutputLine(string html)
         {
-            HTML = $"$: {html}";
-        }
-
-        public OutputLine(string html, bool isHeader)
-        {
             HTML = html;
+            User = string.Empty;
+            Location = string.Empty;
         }
 
         public string HTML { get; set; }  
+
+        public string User { get; set; }
+
+        public string Location { get; set; }
     }
 }
