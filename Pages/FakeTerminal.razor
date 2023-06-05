@@ -33,10 +33,10 @@
                     if (usernames == null)
                     {
                         usernames = new List<string>();
-
                     }
                     usernames.Add(username);
                     await LocalStorage.SetItemAsync<ICollection<string>>("Usernames", usernames);
+                    await SessionStorage.SetItemAsync<string>("Username", username);
                 }
             }
             return;
