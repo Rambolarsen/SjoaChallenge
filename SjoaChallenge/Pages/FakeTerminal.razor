@@ -24,7 +24,7 @@
         if(await UserService.IsLoggedIn())
         {
             username = await UserService.GetUsername();
-            location = await LocationService.GetLocation();
+            location = await LocationService.GetDirectory();
             return;
         }
 
@@ -36,7 +36,7 @@
         if (inputComponent == null || outputComponent == null) return;
 
         var input = inputComponent.GetInput();
-        await outputComponent.ProcessCommand(input);
+        location = await outputComponent.ProcessCommand(input);
     }
 }
 

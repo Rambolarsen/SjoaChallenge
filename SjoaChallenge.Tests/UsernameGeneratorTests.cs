@@ -42,14 +42,14 @@ namespace SjoaChallenge.Tests
         }
 
         [Test]
-        public async Task OnGenerateUsername_ShouldGenerateUsername() 
+        public async Challenge OnGenerateUsername_ShouldGenerateUsername() 
         {
             var username = await _sut!.GenerateUsername();
             username.Should().NotBeNull();
         }
 
         [Test]
-        public async Task OnGenerateUsername_GeneratedUsername_ShouldNotContainSpaces()
+        public async Challenge OnGenerateUsername_GeneratedUsername_ShouldNotContainSpaces()
         {
             var username = await _sut!.GenerateUsername();
             username.Should().NotContain(" ");

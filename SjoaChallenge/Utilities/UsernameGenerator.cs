@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using SjoaChallenge.Services;
+using System.Net.Http.Json;
 
 namespace SjoaChallenge.Utilities
 {
@@ -13,15 +14,12 @@ namespace SjoaChallenge.Utilities
         private ICollection<string>? _animals;
         private ICollection<string>? _foods;
         private readonly Random _random = new Random();
-        private readonly HttpClient _httpClient;
+        private readonly IJsonReader _jsonReader;
 
-        public UsernameGenerator(HttpClient httpClient)
+        public UsernameGenerator(IJsonReader jsonReader)
         {
-            _httpClient = httpClient;
+            _jsonReader = jsonReader;
         }
-
-        private async Task<ICollection<string>?> GetJson(string filename) => 
-            await _httpClient.GetFromJsonAsync<ICollection<string>>($"json/{filename}.json");
 
         private string RemoveSpaceAndReplaceNextLetterWithCapital(string input)
         {
@@ -46,9 +44,9 @@ namespace SjoaChallenge.Utilities
 
         public async Task<string> GenerateUsername()
         {
-            _actions ??= await GetJson("actions");
-            _animals ??= await GetJson("animals");
-            _foods ??= await GetJson("food");
+            _actions ??= await _jsonReader.GetJson<ICollection<string>>("actions");
+            _animals ??= await _jsonReader.GetJson<ICollection<string>>("animals");
+            _foods ??= await _jsonReader.GetJson<ICollection<string>>("food");
             var username = GetRawUsername();
 
             username = RemoveSpaceAndReplaceNextLetterWithCapital(username);

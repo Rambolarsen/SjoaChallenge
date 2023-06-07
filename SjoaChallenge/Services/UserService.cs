@@ -9,18 +9,20 @@ namespace SjoaChallenge.Services
         private readonly ISessionStorageService _sessionStorage;
         private readonly ILocalStorageService _localStorage;
         private readonly IUsernameGenerator _usernameGenerator;
-
+        private readonly LeaderboardService _leaderboardService;
         private const string Username = "Username";
         private const string Usernames = "Usernames";
         private const string LoggedIn = "LoggedIn";
 
         public UserService(ISessionStorageService sessionStorage, 
             ILocalStorageService localStorage,
-            IUsernameGenerator usernameGenerator)
+            IUsernameGenerator usernameGenerator,
+            LeaderboardService leaderboardService)
         {
             _sessionStorage = sessionStorage;
             _localStorage = localStorage;
             _usernameGenerator = usernameGenerator;
+            _leaderboardService = leaderboardService;
         }
 
         public async Task<string> GetUsername()
@@ -35,6 +37,7 @@ namespace SjoaChallenge.Services
                 usernames.Add(username);
                 await _localStorage.SetItemAsync(Usernames, usernames);
                 await _sessionStorage.SetItemAsync(Username, username);
+                await _leaderboardService.AddUser(username);
             }
 
             return username;

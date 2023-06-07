@@ -17,5 +17,7 @@ builder.Services.AddSingleton(typeof(IUsernameGenerator), typeof(UsernameGenerat
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<LocationService>();
 builder.Services.AddSingleton<CommandService>();
+builder.Services.AddSingleton(typeof(IJsonReader), typeof(JsonReader));
+builder.Services.AddSingleton<LeaderboardService>();
 
 await builder.Build().RunAsync();

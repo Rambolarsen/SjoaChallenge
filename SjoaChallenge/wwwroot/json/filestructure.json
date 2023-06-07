@@ -1,0 +1,43 @@
+{
+  "type": "Directory",
+  "name": "Home",
+  "url": "Home/",
+  "children": [
+    {
+      "type": "Directory",
+      "name": "Oppgave1",
+      "url": "Home/Oppgave1/",
+      "children": [
+        {
+          "type": "file",
+          "name": "one.txt",
+          "url": "Home/Oppgave1/one.txt"
+        }
+      ]
+    },
+    {
+      "type": "Directory",
+      "name": "Oppgave2",
+      "url": "Home/Oppgave2/",
+      "children": [
+        {
+          "type": "file",
+          "name": "two.txt",
+          "url": "Home/Oppgave2/two.txt"
+        }
+      ]
+    },
+    {
+      "type": "Directory",
+      "name": "Oppgave3",
+      "url": "Home/Oppgave3/",
+      "children": [
+        {
+          "type": "file",
+          "name": "pingviner.png",
+          "url": "Home/Oppgave3/pingviner.png"
+        }
+      ]
+    }
+  ]
+}
