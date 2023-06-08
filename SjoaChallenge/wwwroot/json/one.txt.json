@@ -1,5 +1,4 @@
 {
-  "html": "test",
-  "solution": "test"
-
+  "html": "<h3>Caesars Hemmelighet</h3><p>Caesar, den berømte romerske generalen, brukte en enkel substitusjonschiffer for å kommunisere med sine tropper. </br> I denne utfordringen har du avlyttet en hemmelig melding sendt av Caesar. <br />Oppgaven din er å dekryptere meldingen og finne det skjulte flagget.</p><p>Kryptert melding: <strong>Az vgg zax, grjxo yax</strong></p><p>Oppgaven løses ved å skrive 'solve &lt;løsningsord&gt;' i gjeldende mappe.</p>",
+  "solution": "Ut paa tur, aldri sur"
 }

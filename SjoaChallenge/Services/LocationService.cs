@@ -1,36 +1,38 @@
-﻿using Blazored.SessionStorage;
-using System.IO;
-using System.Net.Http.Json;
+﻿using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components;
+using SjoaChallenge.Utilities;
 using System.Text;
 
 namespace SjoaChallenge.Services
 {
-    public class LocationService
+    public class LocationService : IAsyncInitialization
     {
-        private readonly ISessionStorageService _sessionStorage;
+        private readonly ILocalStorageService _localStorage;
         private readonly IJsonReader _jsonReader;
         private Structure? _fileStructure;
         private Structure? _currentDirectory;
         private const string Directory = "Directory";
         private const string File = "File";
 
-        public LocationService(ISessionStorageService sessionStorage,
+        public Task Initialization { get; private set; }
+
+        public LocationService(ILocalStorageService localStorage,
             IJsonReader jsonReader)
         {
-            _sessionStorage = sessionStorage;
+            _localStorage = localStorage;
             _jsonReader = jsonReader;
-            Init();
+            Initialization = Init();
         }
-        private async void Init()
+        private async Task Init()
         {
             _fileStructure = await _jsonReader.GetJson<Structure?>("filestructure");
             _currentDirectory = _fileStructure;
-            await _sessionStorage.SetItemAsync(Directory, _currentDirectory!.Url);
+            await _localStorage.SetItemAsync(Directory, _currentDirectory!.Url);
         }
 
         public async Task<string> GetDirectory()
         {
-            var location = (await _sessionStorage.GetItemAsync<string>(Directory)) ?? string.Empty;
+            var location = (await _localStorage.GetItemAsync<string>(Directory)) ?? string.Empty;
             if (string.IsNullOrEmpty(location))
             {
                 return await ChangeDirectory();
@@ -41,8 +43,8 @@ namespace SjoaChallenge.Services
 
         public async Task<string> ChangeDirectory()
         {
-            await _sessionStorage.SetItemAsync(Directory, string.Join("/", _currentDirectory!.Url));
-            return await _sessionStorage.GetItemAsync<string>(Directory);
+            await _localStorage.SetItemAsync(Directory, _currentDirectory!.Url);
+            return await _localStorage.GetItemAsync<string>(Directory);
         }
 
         public async Task<string> TraverseUp()

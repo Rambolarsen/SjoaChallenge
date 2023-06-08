@@ -1,11 +1,10 @@
 ﻿@page "/"
 @using Microsoft.Extensions.Logging
-@inject NavigationManager NavigationManager;
+@inject NavigationManager NavigationManager
+@inject UserService UserService
 @inject ILogger<Index> Logger
 @inject IConfiguration Configuration
 @inject IJSRuntime JS
-
-@inject Blazored.SessionStorage.ISessionStorageService SessionStorage
 
 <PageTitle>Index</PageTitle>
 
@@ -18,7 +17,6 @@
 
 @code {
     private string Text { get; set; } = string.Empty;
-    public InitialSolution initialSolution = new();
 
     private async Task HandleSubmit(ChangeEventArgs e)
     {
@@ -31,15 +29,9 @@
         if (string.Compare("bouvet", e.Value?.ToString(), true) == 0)
         {
             Logger.LogInformation("HandleSubmit called with value {0}", e.Value);
-            var remoteUserAgent = await JS.InvokeAsync<string>("getUserAgent");
 
-            await SessionStorage.SetItemAsStringAsync("LoggedIn", "true");
+            await UserService.LogIn();
             NavigationManager.NavigateTo("terminal");
         }
-    }
-
-    public class InitialSolution
-    {
-        public string? Answer { get; set; }
     }
 }

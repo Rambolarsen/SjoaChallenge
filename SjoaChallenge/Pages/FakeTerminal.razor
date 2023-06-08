@@ -19,10 +19,12 @@
     private InputComponent? inputComponent = new InputComponent();
     private string username = string.Empty;
     private string location = string.Empty;
+
     protected override async Task OnInitializedAsync()
     {
-        if(await UserService.IsLoggedIn())
+        if (await UserService.IsLoggedIn())
         {
+            await LocationService.Initialization;
             username = await UserService.GetUsername();
             location = await LocationService.GetDirectory();
             return;

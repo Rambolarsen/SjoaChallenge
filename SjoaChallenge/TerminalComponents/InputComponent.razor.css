@@ -1,12 +1,22 @@
 ﻿#input-container {
-    width: 100%;
-    font-size: 12px;
+    float:none;
+    overflow:hidden;
+}
+
+#prefix-container{
+    float: left;
 }
 
 #input-field {
     background-color: black;
+    width: 100%;
     border: none;
     color: aqua;
+}
+
+.input-wrapper {
+    width: 100%;
+    font-size:12px;
 }
 
 .username {

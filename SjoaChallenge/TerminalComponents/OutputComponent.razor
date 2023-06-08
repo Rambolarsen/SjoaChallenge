@@ -16,6 +16,15 @@
     [Parameter] public string Location { get; set; } = string.Empty;
     private ICollection<OutputLine> outputLines { get; set; } = new List<OutputLine>(){ new OutputLine("<h3>Test</h3>") };
 
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await CommandService.Initialization;
+        }
+    }
+
     public async Task<string> ProcessCommand(string input)
     {
         await JS.InvokeVoidAsync("scrollToBottom");

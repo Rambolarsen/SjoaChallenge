@@ -1,6 +1,4 @@
-﻿@inject Blazored.SessionStorage.ISessionStorageService SessionStorage
-
-<div style="font-size:12px;">
+﻿<div style="font-size:12px;">
     <span class="username">@Output.User</span>    
     @if (!string.IsNullOrEmpty(@Output.User))
     {
@@ -9,7 +7,7 @@
     <span class="location">@Output.Location</span>
     @if (!string.IsNullOrEmpty(@Output.Location))
     {
-        <span>$ </span>
+        <span>$</span>
     }
     <span class="output-line">@((MarkupString)@Output.HTML)</span>
 </div>

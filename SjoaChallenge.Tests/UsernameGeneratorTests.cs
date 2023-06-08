@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using RichardSzalay.MockHttp;
+using SjoaChallenge.Services;
 using SjoaChallenge.Utilities;
 using System.Text.Json;
 
@@ -32,7 +33,8 @@ namespace SjoaChallenge.Tests
             {
                 BaseAddress = new Uri("http://localhost")
             };
-            _sut = new UsernameGenerator(client);
+            var jsreader = new JsonReader(client);
+            _sut = new UsernameGenerator(jsreader);
         }
 
         [Test]
@@ -42,14 +44,14 @@ namespace SjoaChallenge.Tests
         }
 
         [Test]
-        public async Challenge OnGenerateUsername_ShouldGenerateUsername() 
+        public async Task OnGenerateUsername_ShouldGenerateUsername() 
         {
             var username = await _sut!.GenerateUsername();
             username.Should().NotBeNull();
         }
 
         [Test]
-        public async Challenge OnGenerateUsername_GeneratedUsername_ShouldNotContainSpaces()
+        public async Task OnGenerateUsername_GeneratedUsername_ShouldNotContainSpaces()
         {
             var username = await _sut!.GenerateUsername();
             username.Should().NotContain(" ");

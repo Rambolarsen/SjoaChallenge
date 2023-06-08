@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SjoaChallenge.API": {
+      "commandName": "Project",
+      "commandLineArgs": "start --cors *"
+    }
+  }
+}

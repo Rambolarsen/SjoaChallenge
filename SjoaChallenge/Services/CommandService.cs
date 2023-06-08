@@ -1,23 +1,35 @@
-﻿using System.Net.Http.Json;
+﻿using SjoaChallenge.Utilities;
+using System.Net.Http.Json;
 using System.Text;
 
 namespace SjoaChallenge.Services
 {
-    public class CommandService
+    public class CommandService : IAsyncInitialization
     {
         private readonly IJsonReader _jsonReader;
         private readonly LocationService _locationService;
+        private readonly LeaderboardService _leaderboardService;
+        private readonly SolveService _solveService;
         private ICollection<string>? _supportedCommands;
 
-        public CommandService(IJsonReader jsonReader, LocationService locationService)
+        public CommandService(IJsonReader jsonReader, 
+            LocationService locationService,
+            LeaderboardService leaderboardService,
+            SolveService solveService)
         {
             _jsonReader = jsonReader;
             _locationService = locationService;
-            Init();
+            _leaderboardService = leaderboardService;
+            _solveService = solveService;
+
+            Initialization = Init();
         }
 
-        private async void Init()
+        public Task Initialization { get; set; }
+
+        private async Task Init()
         {
+            await _locationService.Initialization;
             _supportedCommands = await _jsonReader.GetJson<ICollection<string>>("supportedCommands");
         }
 
@@ -58,15 +70,46 @@ namespace SjoaChallenge.Services
             if (string.Compare(strings[0], "leaderboard", true) == 0)
             {
                 if (strings.Length != 1) return ("<p>Invalid number of arguments.</p>", string.Empty);
-                return (ListLeaderBoard(), string.Empty);
+                return (await ListLeaderBoard(), string.Empty);
+            }
+
+            if (string.Compare(strings[0], "solve", true) == 0)
+            {
+                if (strings.Length == 1) return ("<p>Need to supply a solution</p>.", string.Empty);
+                return (await Solve(strings.Skip(1)), string.Empty);
             }
             //TODO:
             return (string.Empty, string.Empty);
         }
 
-        private string ListLeaderBoard()
+        private async Task<string> Solve(IEnumerable<string> strings)
         {
-            throw new NotImplementedException();
+            var phrase = string.Join(" ", strings);
+            phrase = phrase.Trim();
+            var currentTask = await _locationService.GetDirectory();
+            var solved = await _solveService.TrySolve(currentTask, phrase);
+            if (solved)
+            {
+                return "<p>Congratulatons! That was the correct answer!</p>";
+            }
+
+            return "<p>Wrong answer! Try again.</p>";
+        }
+
+        private async Task<string> ListLeaderBoard()
+        {
+            var leaderboard = await _leaderboardService.GetLeaderboard();
+            var sortedLeaderboard = from entry in leaderboard orderby entry.Value.Item1 descending orderby entry.Value.Item2 ascending select entry;
+            var stringbuilder = new StringBuilder();
+            stringbuilder.AppendLine("<p>Current Leaderboard:</p>");
+            stringbuilder.AppendLine("<ul style='list-style-type: none;'>");
+            foreach (var user in leaderboard)
+            {
+                stringbuilder.AppendLine($"<li>{user.Key} - {user.Value}</li>");
+            }
+            stringbuilder.AppendLine("</ul>");
+
+            return stringbuilder.ToString();
         }
 
         private async Task<string> OpenFile(string file)

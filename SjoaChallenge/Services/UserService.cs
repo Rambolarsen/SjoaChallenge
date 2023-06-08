@@ -1,55 +1,50 @@
 ﻿using Blazored.LocalStorage;
-using Blazored.SessionStorage;
 using SjoaChallenge.Utilities;
+using System.Net.Http.Json;
 
 namespace SjoaChallenge.Services
 {
     public class UserService
     {
-        private readonly ISessionStorageService _sessionStorage;
         private readonly ILocalStorageService _localStorage;
         private readonly IUsernameGenerator _usernameGenerator;
         private readonly LeaderboardService _leaderboardService;
+        private readonly HttpClient _httpClient;
         private const string Username = "Username";
-        private const string Usernames = "Usernames";
         private const string LoggedIn = "LoggedIn";
+        private const string API = "API";
+        private const string ApiUri = "api/users";
 
-        public UserService(ISessionStorageService sessionStorage, 
-            ILocalStorageService localStorage,
+        public UserService(ILocalStorageService localStorage,
             IUsernameGenerator usernameGenerator,
-            LeaderboardService leaderboardService)
+            LeaderboardService leaderboardService,
+            IHttpClientFactory httpClientFactory)
         {
-            _sessionStorage = sessionStorage;
             _localStorage = localStorage;
             _usernameGenerator = usernameGenerator;
             _leaderboardService = leaderboardService;
+            _httpClient = httpClientFactory.CreateClient(API);
         }
 
         public async Task<string> GetUsername()
         {
-            var username = (await _sessionStorage.GetItemAsync<string>(Username)) ?? string.Empty;
+            var username = (await _localStorage.GetItemAsync<string>(Username)) ?? string.Empty;
             if (string.IsNullOrEmpty(username))
             {
-                var usernames = await _localStorage.GetItemAsync<ICollection<string>>(Usernames);
+                var usernames = await _httpClient.GetFromJsonAsync<ICollection<string>>(ApiUri);
                 username = await GenerateUniqueUsername(usernames);
 
-                usernames ??= new List<string>();
-                usernames.Add(username);
-                await _localStorage.SetItemAsync(Usernames, usernames);
-                await _sessionStorage.SetItemAsync(Username, username);
+                await _httpClient.PostAsJsonAsync(ApiUri, username);
+                await _localStorage.SetItemAsync(Username, username);
                 await _leaderboardService.AddUser(username);
             }
 
             return username;
         }
 
-        public async Task<bool> IsLoggedIn()
-        {
-            if(bool.TryParse((await _sessionStorage.GetItemAsStringAsync(LoggedIn)), out var loggedIn))
-                return loggedIn;
-            
-            return false;
-        }
+        public async Task<bool> IsLoggedIn() => await _localStorage.GetItemAsync<bool>(LoggedIn);
+
+        public async Task LogIn() => await _localStorage.SetItemAsync(LoggedIn, true);
 
         private async Task<string> GenerateUniqueUsername(ICollection<string>? usernames)
         {

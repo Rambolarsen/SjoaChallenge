@@ -1,17 +1,21 @@
 ﻿@inject IJSRuntime JS
 
-<div id="input-container">
-    <span class="username">@Username</span>
-    @if (!string.IsNullOrEmpty(Username))
-    {
-        <span>:</span>
-    }
-    <span class="location">@Location</span>
-    @if (!string.IsNullOrEmpty(Location))
-    {
-        <span>$ </span>
-    } 
-    <input id="input-field" @bind="commandInput" @ref="commandInputReference" autofocus />
+<div class="input-wrapper">
+    <div id="prefix-container">
+        <span class="username">@Username</span>
+        @if (!string.IsNullOrEmpty(Username))
+        {
+            <span>:</span>
+        }
+        <span class="location">@Location</span>
+        @if (!string.IsNullOrEmpty(Location))
+        {
+            <span>$</span>
+        } 
+    </div>
+    <div id="input-container">
+        <input id="input-field" @bind="commandInput" @ref="commandInputReference" autofocus />
+    </div>
 </div>
 
 
