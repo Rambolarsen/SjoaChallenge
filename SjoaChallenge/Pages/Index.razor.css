@@ -5,8 +5,20 @@
 }
 
 input {
-    height: 25px;
-    font-size: 25px;
-    margin-top: -5rem;
-    max-width: 80%;
+    height: 30px;
+    font-size: 15px;
+    margin-top: 0rem;
+    width: 100%;
+}
+
+#wrapper {
+    margin: -100px auto 15px auto;
+    width: 600px;
+    background: #ffffff;
+    padding: 15px;
+}
+
+#wrapper img { 
+    width: 100%;
+    padding: 15px 5px;
 }

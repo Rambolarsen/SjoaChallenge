@@ -59,8 +59,8 @@ namespace SjoaChallenge.Services
         public async Task<(string, string)> ChangeDirectory(string directory)
         {
             var current = _currentDirectory!.Children.FirstOrDefault(x => 
-                string.Compare(x.Name, directory, true) == 0 
-                && string.Compare(x.Type, Directory, true) == 0);
+                x.Name.EqualsIgnoreCase(directory) 
+                && x.Type.EqualsIgnoreCase(Directory));
             if (current == null) return ("<p>Invalid child directory. You're only able to change into child directories.</p>", string.Empty);
 
             _currentDirectory = current;
@@ -76,7 +76,7 @@ namespace SjoaChallenge.Services
                 stringBuilder.AppendLine("<ul style='list-style-type: none;'>");
                 foreach (var structure in _currentDirectory.Children)
                 {
-                    var name = string.Compare(structure.Type, "directory", true) == 0 ? structure.Name + "/" : structure.Name;
+                    var name = structure.Type.EqualsIgnoreCase("directory") ? structure.Name + "/" : structure.Name;
                     stringBuilder.AppendLine($"<li>{name}</li>");
                 }
                 stringBuilder.AppendLine("</ul>");
@@ -88,8 +88,8 @@ namespace SjoaChallenge.Services
         {
             var stringBuilder = new StringBuilder();
             var current = _currentDirectory!.Children.FirstOrDefault(x =>
-                string.Compare(x.Name, file, true) == 0
-                && string.Compare(x.Type, File, true) == 0);
+                x.Name.EqualsIgnoreCase(file)
+                && x.Type.EqualsIgnoreCase(File));
             if (current == null) return "<p>Invalid file. You're only able to open files in current directory.</p>";
 
             var responseFile = await _jsonReader.GetJson<Challenge?>(file);

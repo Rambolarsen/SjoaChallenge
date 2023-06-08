@@ -15,7 +15,7 @@ namespace SjoaChallenge.Services
         public async Task AddUser(string username) => 
             await _httpClient.PostAsJsonAsync(ApiUri, username);
 
-        public async Task<IDictionary<string, (int, DateTime)>> GetLeaderboard() => 
+        public async Task<IDictionary<string, (int score, DateTime updated)>> GetLeaderboard() => 
             await _httpClient.GetFromJsonAsync<IDictionary<string, (int, DateTime)>>(ApiUri) ?? new Dictionary<string, (int, DateTime)>();
     }
 }

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SjoaChallenge.Tests", "Sjoa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SjoaChallenge.API", "SjoaChallenge.API\SjoaChallenge.API.csproj", "{7DDF696C-1D4A-473B-A93A-DEA2CA58BF0A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SjoaChallenge.Common", "SjoaChallenge.Common\SjoaChallenge.Common.csproj", "{8627F1F7-C5FA-47CA-830D-A0B59AE7C61D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7DDF696C-1D4A-473B-A93A-DEA2CA58BF0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DDF696C-1D4A-473B-A93A-DEA2CA58BF0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DDF696C-1D4A-473B-A93A-DEA2CA58BF0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8627F1F7-C5FA-47CA-830D-A0B59AE7C61D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8627F1F7-C5FA-47CA-830D-A0B59AE7C61D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8627F1F7-C5FA-47CA-830D-A0B59AE7C61D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8627F1F7-C5FA-47CA-830D-A0B59AE7C61D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

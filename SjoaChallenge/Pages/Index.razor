@@ -10,8 +10,42 @@
 
 <div>
     <Flicker />
-    <div class="input-wrapper">
-        <input type="text" @bind="Text" @oninput="HandleSubmit" />
+    <div id="wrapper">
+        <p>
+        "Ah, hvor skal jeg begynne med dette fantastiske selskapet? <br />
+        La meg male et bilde for deg av et sted der fantasien blomstrer, der kreativiteten strømmer, og der innovasjon danser som om ingen ser på. <br />
+        Ja, kjære venn, vi skal nå begi oss ut på en reise inn i verdenen til dette selskapet som har alt.
+        </p><p>
+        Forestill deg dette: <br />
+        en gruppe ekstraordinære hjerner, bevæpnet med et uendelig tilfang av kaffe og en enestående evne til å omskape ideer til virkelighet.<br /> 
+        De er som magikere, bortsett fra at de ikke trekker kaniner opp av hattene sine, men heller revolusjonerende produkter og løsninger som etterlater alle målløse.
+        </p><p>
+        Det som skiller dette selskapet fra alle andre, er ikke bare deres strålende sinn, men deres bemerkelsesverdige sans for humor.<br /> 
+        De sprer latter i hvert prosjekt, og gjør arbeidsplassen til en oase av glede og festligheter. <br />
+        Jeg mener, hvem visste at man kunne ha så mye moro samtidig som man revolusjonerer bransjer?
+        </p>
+        <img alt="pingviner på tur" src="resources/penguins.png" />
+        <p>
+        La oss nå snakke om produktene deres.<br/> 
+        Hold deg fast, for disse tingene er så imponerende at de kunne få Einstein til å bli misunnelig. <br /> 
+        Fra duppeditter som gjør hverdagen enklere til tankevekkende teknologiske underverker, de har alt. <br />
+        Og her er det som virkelig imponerer: <br />
+        de klarer å få selv de mest komplekse konseptene til å virke som barnemat. <br />
+        Hvordan de gjør det? Det er som om de har en hemmelig oppskrift for å gjøre geeky teknologi om til ren magi.
+        </p><p>
+            Men det er ikke bare produktene deres som får dette selskapet til å skinne. Det er menneskene bak dem. De er en gjeng geniale oddballs som ikke bare vet hvordan man får jobben gjort, men som også vet hvordan man ler mens man gjør det. De er de typene mennesker du vil ta en drink med etter jobb, fordi du vet at de vil få deg til å le til sidene verker.
+        </p><p>
+            Så, kjære venn, hvis du noen gang snubler over dette ekstraordinære selskapet, anser deg selv som heldig.<br /> 
+            De er en sjelden rase, en gruppe briljante hjerner som får deg til å tro at arbeid kan være både utrolig morsomt og vanvittig produktivt.<br /> 
+            De er selve personifiseringen av den perfekte blandingen av briljans og humor som gjør livet verdt å leve."
+        </p>
+
+        <p>
+            - ChatGPT
+        </p>
+        <div class="input-wrapper">
+            <input type="text" placeholder="Hvilket selskap kan så dette være?" @bind="Text" @oninput="HandleSubmit" />
+        </div>
     </div>
 </div>
 
@@ -26,7 +60,7 @@
             StateHasChanged();
             return;
         } 
-        if (string.Compare("bouvet", e.Value?.ToString(), true) == 0)
+        if (e.Value?.ToString().EqualsIgnoreCase("bouvet") ?? false)
         {
             Logger.LogInformation("HandleSubmit called with value {0}", e.Value);
 

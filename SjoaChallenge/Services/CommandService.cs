@@ -35,47 +35,48 @@ namespace SjoaChallenge.Services
 
         public async Task<(string html,string directory)> HandleCommand(string input)
         {
-            if (string.IsNullOrEmpty(input)) {  return ("<p>No command given.</p>", string.Empty); }
+            if (string.IsNullOrEmpty(input)) { return ("<p>No command given.</p>", string.Empty); }
 
             var strings = input.Split(" ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
             var command = strings[0];
-            if (!_supportedCommands!.Contains(strings[0])) { 
-                return ("<p> Unsupported command. Write 'help' to see supported commands.</p>", string.Empty); 
+            if (!_supportedCommands!.Contains(strings[0]))
+            {
+                return ("<p> Unsupported command. Write 'help' to see supported commands.</p>", string.Empty);
             }
 
-            if(string.Compare(command, "ls", true) == 0 || string.Compare(command, "dir", true) == 0)
+            if (command.EqualsIgnoreCase("ls") || command.EqualsIgnoreCase("dir"))
             {
                 if (strings.Length != 1) return ("<p>Invalid number of arguments.</p>", string.Empty);
                 return ListDirectory();
             }
 
-            if(string.Compare(command, "cd", true) == 0)
+            if (command.EqualsIgnoreCase("cd"))
             {
                 if (strings.Length != 2) return ("<p>Invalid number of arguments.</p>", string.Empty);
                 return await ChangeDirectory(strings[1]);
             }
 
-            if (string.Compare(command, "cat", true) == 0)
+            if (command.EqualsIgnoreCase("cat"))
             {
                 if (strings.Length != 2) return ("<p>Invalid number of arguments.</p>", string.Empty);
                 return (await OpenFile(strings[1]), string.Empty);
             }
 
-            if (string.Compare(strings[0], "help", true) == 0)
+            if (command.EqualsIgnoreCase("help"))
             {
                 if (strings.Length != 1) return ("<p>Invalid number of arguments.</p>", string.Empty);
                 return (ListSupportedCommands(), string.Empty);
             }
 
-            if (string.Compare(strings[0], "leaderboard", true) == 0)
+            if (command.EqualsIgnoreCase("leaderboard"))
             {
                 if (strings.Length != 1) return ("<p>Invalid number of arguments.</p>", string.Empty);
                 return (await ListLeaderBoard(), string.Empty);
             }
 
-            if (string.Compare(strings[0], "solve", true) == 0)
+            if (command.EqualsIgnoreCase("solve"))
             {
-                if (strings.Length == 1) return ("<p>Need to supply a solution</p>.", string.Empty);
+                if (strings.Length == 1) return ("<p>Invalid number of arguments.</p>.", string.Empty);
                 return (await Solve(strings.Skip(1)), string.Empty);
             }
             //TODO:
@@ -99,13 +100,13 @@ namespace SjoaChallenge.Services
         private async Task<string> ListLeaderBoard()
         {
             var leaderboard = await _leaderboardService.GetLeaderboard();
-            var sortedLeaderboard = from entry in leaderboard orderby entry.Value.Item1 descending orderby entry.Value.Item2 ascending select entry;
+            var sortedLeaderboard = (from entry in leaderboard orderby entry.Value.Item1 descending orderby entry.Value.Item2 ascending select entry).ToList();
             var stringbuilder = new StringBuilder();
             stringbuilder.AppendLine("<p>Current Leaderboard:</p>");
             stringbuilder.AppendLine("<ul style='list-style-type: none;'>");
             foreach (var user in leaderboard)
             {
-                stringbuilder.AppendLine($"<li>{user.Key} - {user.Value}</li>");
+                stringbuilder.AppendLine($"<li>{user.Key} - {user.Value.score}</li>");
             }
             stringbuilder.AppendLine("</ul>");
 
@@ -120,7 +121,7 @@ namespace SjoaChallenge.Services
 
         private async Task<(string html, string directory)> ChangeDirectory(string directory)
         {
-            if(string.Compare(directory, "..", true) == 0)
+            if(directory.EqualsIgnoreCase(".."))
                 return (string.Empty, await _locationService.TraverseUp());
             else
             {
