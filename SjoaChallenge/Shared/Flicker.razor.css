@@ -77,34 +77,34 @@ p {
 @media (max-width: 600px) {
     p {
         font-size: 48px;
-        margin: -10rem 2rem 11rem 2rem;
+        margin: -7rem 2rem 11rem 2rem;
     }
 
     .main-menu {
-        height: 60px;
+        height: 160px;
     }
 }
 
 @media (max-width: 450px) {
     p {
         font-size: 32px;
-        margin: -9rem 2rem 11rem 2rem;
+        margin: -4rem 2rem 11rem 2rem;
         min-width: 230px;
     }
 
     .main-menu {
-        height: 50px;
+        height: 80px;
     }
 }
 
-@media (max-width: 300px) {
+@media (max-width: 315px) {
     p {
         font-size: 25px;
-        margin: -8rem 2rem 11rem 2rem;
+        margin: -4rem 2rem 11rem 2rem;
         min-width: 230px;
     }
 
     .main-menu {
-        height: 30px;
+        height: 100px;
     }
 }

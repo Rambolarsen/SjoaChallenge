@@ -4,9 +4,10 @@
     background-image: none;
 }
 
-#terminal{
+#terminal {
     color: white;
     background: black;
-    height:100%;
-    font-family: 'Cascadia Code'
+    height: 100%;
+    font-family: 'Cascadia Code'; 
+    padding: 0 5px;
 }

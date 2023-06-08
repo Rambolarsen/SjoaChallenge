@@ -38,8 +38,8 @@ namespace SjoaChallenge.Services
             if (string.IsNullOrEmpty(input)) { return ("<p>No command given.</p>", string.Empty); }
 
             var strings = input.Split(" ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-            var command = strings[0];
-            if (!_supportedCommands!.Contains(strings[0]))
+            var command = strings[0].ToLowerInvariant();
+            if (!_supportedCommands!.Contains(command))
             {
                 return ("<p> Unsupported command. Write 'help' to see supported commands.</p>", string.Empty);
             }
