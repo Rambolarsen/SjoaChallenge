@@ -76,7 +76,7 @@ namespace SjoaChallenge.Services
 
             if (command.EqualsIgnoreCase("solve"))
             {
-                if (strings.Length == 1) return ("<p>Invalid number of arguments.</p>.", string.Empty);
+                if (strings.Length == 1) return ("<p>Invalid number of arguments.</p>", string.Empty);
                 return (await Solve(strings.Skip(1)), string.Empty);
             }
             //TODO:
@@ -88,25 +88,19 @@ namespace SjoaChallenge.Services
             var phrase = string.Join(" ", strings);
             phrase = phrase.Trim();
             var currentTask = await _locationService.GetDirectory();
-            var solved = await _solveService.TrySolve(currentTask, phrase);
-            if (solved)
-            {
-                return "<p>Congratulatons! That was the correct answer!</p>";
-            }
-
-            return "<p>Wrong answer! Try again.</p>";
+            return await _solveService.Solve(currentTask, phrase);           
         }
 
         private async Task<string> ListLeaderBoard()
         {
             var leaderboard = await _leaderboardService.GetLeaderboard();
-            var sortedLeaderboard = (from entry in leaderboard orderby entry.Value.Item1 descending orderby entry.Value.Item2 ascending select entry).ToList();
+            var sortedLeaderboard = (from entry in leaderboard orderby entry.Score descending orderby entry.Updated ascending select entry).ToList();
             var stringbuilder = new StringBuilder();
             stringbuilder.AppendLine("<p>Current Leaderboard:</p>");
             stringbuilder.AppendLine("<ul style='list-style-type: none;'>");
-            foreach (var user in leaderboard)
+            foreach (var user in sortedLeaderboard)
             {
-                stringbuilder.AppendLine($"<li>{user.Key} - {user.Value.score}</li>");
+                stringbuilder.AppendLine($"<li>{user.Username} - {user.Score}</li>");
             }
             stringbuilder.AppendLine("</ul>");
 

@@ -15,9 +15,9 @@
     [Parameter] public string Username { get; set; } = string.Empty;
     [Parameter] public string Location { get; set; } = string.Empty;
     private ICollection<OutputLine> outputLines { get; set; } = new List<OutputLine>(){ 
-        new OutputLine("<h3>CTF Challenge</h3><p>Velkommen til Sandvika Drammen områdetur 2023 CTF Challenge.</p>"
+        new OutputLine("<h3>CTF Challenge</h3><p>Velkommen til Sandvika Drammen områdetur 2023 CTF Challenge!</p>"
         + "<p>Du har nå forvillet deg inn i en hjemmesnekra terminal. Det DU skal gjøre... får du nesten finne ut av selv.</p>"
-        + "<p>Star ved å skrive inn 'help'. Lykke til! </p>")};
+        + "<p>Start ved å skrive inn 'help'. Lykke til! </p>")};
 
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

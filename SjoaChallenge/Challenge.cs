@@ -2,13 +2,11 @@
 {
     public class Challenge
     {
-        public Challenge(string html, string solution ) 
+        public Challenge(string html) 
         {
-            HTML = html;
-            Solution = solution;
+            HTML = html;            
         }
 
-        public string HTML { get; private set; }
-        public string Solution { get; private set; }
+        public string HTML { get; private set; }        
     }
 }

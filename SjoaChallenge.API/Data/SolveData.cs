@@ -19,7 +19,7 @@ namespace SjoaChallenge.API.Data
             { "Home/Oppgave2/", "Det er gøy å sove i lavo" },
             { "Home/Oppgave3/", "Ut paa tur, aldri sur" },
         };
-
+        
         public Task<bool> CheckAnswer(string currentTask, string phrase)
         {
             var valid = _solutions.TryGetValue(currentTask, out var answer);

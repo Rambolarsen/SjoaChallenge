@@ -13,5 +13,6 @@ public class Startup : FunctionsStartup
         builder.Services.AddSingleton<IUserData, UserData>();
         builder.Services.AddSingleton<ILeaderboardData, LeaderboardData>();
         builder.Services.AddSingleton<ISolveData, SolveData>();
+        builder.Services.AddSingleton<ITaskSolverData, TaskSolverData>();
     }
 }

@@ -23,5 +23,6 @@ builder.Services.AddScoped<CommandService>();
 builder.Services.AddScoped(typeof(IJsonReader), typeof(JsonReader));
 builder.Services.AddScoped<LeaderboardService>();
 builder.Services.AddScoped<SolveService>();
+builder.Services.AddScoped<TaskSolverService>();
 
 await builder.Build().RunAsync();

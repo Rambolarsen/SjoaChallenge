@@ -49,4 +49,25 @@ namespace SjoaChallenge.API.Functions
             return new OkResult();
         }
     }
+
+    public class LeaderboardPut
+    {
+        private readonly ILeaderboardData _leaderboardData;
+
+        public LeaderboardPut(ILeaderboardData leaderboardData)
+        {
+            _leaderboardData = leaderboardData;
+        }
+
+        [FunctionName("LeaderboardPut")]
+        public async Task<IActionResult> Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "leaderboard")] HttpRequest req, ILogger log)
+        {
+            var body = await new StreamReader(req.Body).ReadToEndAsync();
+            var user = JsonSerializer.Deserialize<string>(body, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+
+            await _leaderboardData.UpdateLeaderboard(user);
+            return new OkResult();
+        }
+    }
 }

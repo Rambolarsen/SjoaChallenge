@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using SjoaChallenge.Common;
+using System.Net.Http.Json;
 
 namespace SjoaChallenge.Services
 {
@@ -15,7 +16,10 @@ namespace SjoaChallenge.Services
         public async Task AddUser(string username) => 
             await _httpClient.PostAsJsonAsync(ApiUri, username);
 
-        public async Task<IDictionary<string, (int score, DateTime updated)>> GetLeaderboard() => 
-            await _httpClient.GetFromJsonAsync<IDictionary<string, (int, DateTime)>>(ApiUri) ?? new Dictionary<string, (int, DateTime)>();
+        public async Task UpdateLeaderboard(string username) =>
+            await _httpClient.PutAsJsonAsync(ApiUri, username);
+
+        public async Task<ICollection<LeaderboardEntry>> GetLeaderboard() => 
+            await _httpClient.GetFromJsonAsync<ICollection<LeaderboardEntry>>(ApiUri) ?? new List<LeaderboardEntry>();
     }
 }
