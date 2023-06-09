@@ -17,7 +17,7 @@ namespace SjoaChallenge.API.Data
         {
             { "Home/Oppgave1/", "Ut paa tur, aldri sur" },
             { "Home/Oppgave2/", "Det er gøy å sove i lavo" },
-            { "Home/Oppgave3/", "Ut paa tur, aldri sur" },
+            { "Home/Oppgave3/", "sjoatur" },
         };
         
         public Task<bool> CheckAnswer(string currentTask, string phrase)

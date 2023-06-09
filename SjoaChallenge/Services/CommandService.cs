@@ -94,7 +94,7 @@ namespace SjoaChallenge.Services
         private async Task<string> ListLeaderBoard()
         {
             var leaderboard = await _leaderboardService.GetLeaderboard();
-            var sortedLeaderboard = (from entry in leaderboard orderby entry.Score descending orderby entry.Updated ascending select entry).ToList();
+            var sortedLeaderboard = leaderboard.OrderByDescending(x => x.Score).ThenBy(y => y.Updated).ToList();
             var stringbuilder = new StringBuilder();
             stringbuilder.AppendLine("<p>Current Leaderboard:</p>");
             stringbuilder.AppendLine("<ul style='list-style-type: none;'>");
