@@ -11,6 +11,7 @@ namespace SjoaChallenge.API.Data
         Task<bool> CheckAnswer(string currentTask, string phrase);
     }
 
+
     public class SolveData : ISolveData
     {
         private readonly IDictionary<string, string> _solutions = new Dictionary<string, string>()
